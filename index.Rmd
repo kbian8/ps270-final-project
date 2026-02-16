@@ -11,4 +11,4 @@ output:
 
 ## Project thoughts
 
-I think I might do something with voting behavior amongst young people or Asian Americans. 
+I think I might do something with voting behavior among young people or Asian Americans. Maybe data about how often young people vote in certain elections in swing states vs non swing states. 
