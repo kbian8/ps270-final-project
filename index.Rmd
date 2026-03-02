@@ -8,7 +8,33 @@ output:
 ---
 
 
-
 ## Project thoughts
 
 I think I might do something with voting behavior among young people or Asian Americans. Maybe data about how often young people vote in certain elections in swing states vs non swing states. 
+
+
+```{r}
+library(readxl)
+```
+
+
+
+```{r}
+post <-
+  read_excel("/Users/kbian50/PS 270/Final Project/data/Post-Dobbs State Abortion Restrictions and Protections_Data Page.xlsx")
+```
+
+```{r}
+states <- 
+  read_excel("/Users/kbian50/PS 270/Final Project/data/Abortions-Distributed-by-State-2013-2022.xlsx")
+```
+```{r}
+head(states)
+```
+
+```{r}
+head(post)
+```
+
+
+Did states that enacted total abortion bans after Dobbs experience statistically significant declines in in-state abortion rates relative to states that did not? In this study, I want to examine whether or not abortion restrictions in 2022 actually decrease the rate of abortions performed in each state. I hypothesize that abortion rates decreased, but not in a drastic fashion that anti-abortion politicians (Republicans) intend. The Republican Party platform expects a direct causal relationship between abortion restrictions and rates of abortions-- if abortion is restricted or banned, abortion rates will directly go down. However, I don't believe this accounts for confounding variables that can affect abortion rates, such as interstate travel, tele-health, etc. I plan on focusing on a specific state or comparing one state that didn't enact a ban vs. a state that did not enact a ban. For example, the explanatory variable is a state that enacted a post-Dobbs ban and a state that did not. The outcome variable of interest is the rate of abortions performed. If there is a slight decrease in abortion rates, this will prove my hypothesis. If there is no change or an increase, this will disprove my hypothesis.  
