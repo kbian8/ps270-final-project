@@ -1,0 +1,73 @@
+---
+title: "Final Project Milestone 3"
+author: "Kathy Bian"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r}
+library(readxl)
+library(tidyverse)
+```
+
+
+
+```{r}
+post <-
+  read_excel("/Users/kbian50/PS 270/Final Project/data/Post-Dobbs State Abortion Restrictions and Protections_Data Page.xlsx")
+post
+```
+
+```{r}
+abortion_2022 <- 
+  read_excel("/Users/kbian50/PS 270/Final Project/data/Abortions-Distributed-by-State-2013-2022.xlsx", sheet="2022", skip = 1)
+abortion_2022
+```
+```{r}
+abortion_2022 <- abortion_2022 |>
+  select(Area, `Total by location of service`)|>
+  na.omit(abortion_2022) |>
+     filter(`Total by location of service` != "--") |>
+    rename(`Total number of abortions in the area` = `Total by location of service`) |>
+    mutate(Year = 2022,
+           `Total number of abortions in the area` = as.numeric(`Total number of abortions in the area`))
+abortion_2022
+```
+
+```{r}
+abortion_2021 <- 
+  read_excel("/Users/kbian50/PS 270/Final Project/data/Abortions-Distributed-by-State-2013-2022.xlsx", sheet="2021", skip = 1)
+abortion_2021
+```
+
+```{r}
+abortion_2021 <- abortion_2021 |>
+  select(Area, `Total by location of service`)|>
+  na.omit(abortion_2021) |>
+     filter(`Total by location of service` != "--") |>
+    rename(`Total number of abortions in the area` = `Total by location of service`) |>
+    mutate(Year = 2021,
+            `Total number of abortions in the area` = as.numeric(`Total number of abortions in the area`))
+abortion_2021
+```
+
+```{r}
+abortion_combined <-
+  rbind(abortion_2021, abortion_2022)
+abortion_combined
+```
+
+```{r}
+abortion_hist <-
+  ggplot(data = abortion_combined,
+         mapping = aes(x = `Total number of abortions in the area`)) +
+  geom_histogram(bins = 20) + facet_wrap(~Year) + 
+  scale_x_log10() + 
+  labs(x = "Number of Abortions",
+       y = "Number of States",
+       title = "Comparison of Post-Dobbs Abortion Rates (2021 vs 2022)")
+abortion_hist
+```
+
+
+
