@@ -99,11 +99,12 @@ abortion_combined
 ```
 
 ```{r}
+library(scales)
 abortion_hist <-
   ggplot(data = abortion_combined,
          mapping = aes(x = `Total number of abortions in the area`)) +
   geom_histogram(bins = 20) + facet_wrap(~Year) + 
-  scale_x_log10() + 
+  scale_x_log10(labels = label_comma()) + 
   labs(x = "Number of Abortions",
        y = "Number of States",
        title = "Comparison of Post-Dobbs Abortion Rates (2021 vs 2022)")
