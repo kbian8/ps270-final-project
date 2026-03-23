@@ -107,7 +107,8 @@ abortion_hist <-
   scale_x_log10(labels = label_comma()) + 
   labs(x = "Number of Abortions",
        y = "Number of States",
-       title = "Comparison of Post-Dobbs Abortion Rates (2021 vs 2022)")
+       title = "Comparison of Post-Dobbs Abortion Rates (2021 vs 2022)") + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 abortion_hist
 ```
 
