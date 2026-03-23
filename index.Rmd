@@ -15,6 +15,7 @@ I think I might do something with voting behavior among young people or Asian Am
 
 ```{r}
 library(readxl)
+library(tidyverse)
 ```
 
 
@@ -25,11 +26,13 @@ post <-
 ```
 
 ```{r}
-states <- 
-  read_excel("/Users/kbian50/PS 270/Final Project/data/Abortions-Distributed-by-State-2013-2022.xlsx")
+abortion_2022 <- 
+  read_excel("/Users/kbian50/PS 270/Final Project/data/Abortions-Distributed-by-State-2013-2022.xlsx", sheet="2022", skip = 1)
 ```
 ```{r}
-head(states)
+head(abortion_2022)
+abortion_2022 <- abortion_2022 |>
+  select(Area, `Total by location of service`)
 ```
 
 ```{r}
@@ -37,4 +40,76 @@ head(post)
 ```
 
 
-Did states that enacted total abortion bans after Dobbs experience statistically significant declines in in-state abortion rates relative to states that did not? In this study, I want to examine whether or not abortion restrictions in 2022 actually decrease the rate of abortions performed in each state. I hypothesize that abortion rates decreased, but not in a drastic fashion that anti-abortion politicians (Republicans) intend. The Republican Party platform expects a direct causal relationship between abortion restrictions and rates of abortions-- if abortion is restricted or banned, abortion rates will directly go down. However, I don't believe this accounts for confounding variables that can affect abortion rates, such as interstate travel, tele-health, etc. I plan on focusing on a specific state or comparing one state that didn't enact a ban vs. a state that did not enact a ban. For example, the explanatory variable is a state that enacted a post-Dobbs ban and a state that did not. The outcome variable of interest is the rate of abortions performed. If there is a slight decrease in abortion rates, this will prove my hypothesis. If there is no change or an increase, this will disprove my hypothesis.  
+Did states that enacted total abortion bans after Dobbs experience statistically significant declines in in-state abortion rates relative to states that did not? In this study, I want to examine whether or not abortion restrictions in 2022 actually decrease the rate of abortions performed in each state. I hypothesize that abortion rates decreased, but not in a drastic fashion that anti-abortion politicians (Republicans) intend. The Republican Party platform expects a direct causal relationship between abortion restrictions and rates of abortions-- if abortion is restricted or banned, abortion rates will directly go down. However, I don't believe this accounts for confounding variables that can affect abortion rates, such as interstate travel, tele-health, etc. I plan on focusing on a specific state or comparing one state that didn't enact a ban vs. a state that did not enact a ban. For example, the explanatory variable is a state that enacted a post-Dobbs ban and a state that did not. The outcome variable of interest is the rate of abortions performed. If there is a slight decrease in abortion rates, this will prove my hypothesis. If there is no change or an increase, this will disprove my hypothesis.
+
+
+
+## Final Project Milestone 3 
+
+```{r}
+library(readxl)
+library(tidyverse)
+```
+
+
+
+```{r}
+post <-
+  read_excel("/Users/kbian50/PS 270/Final Project/data/Post-Dobbs State Abortion Restrictions and Protections_Data Page.xlsx")
+post
+```
+
+```{r}
+abortion_2022 <- 
+  read_excel("/Users/kbian50/PS 270/Final Project/data/Abortions-Distributed-by-State-2013-2022.xlsx", sheet="2022", skip = 1)
+abortion_2022
+```
+```{r}
+abortion_2022 <- abortion_2022 |>
+  select(Area, `Total by location of service`)|>
+  na.omit(abortion_2022) |>
+     filter(`Total by location of service` != "--") |>
+    rename(`Total number of abortions in the area` = `Total by location of service`) |>
+    mutate(Year = 2022,
+           `Total number of abortions in the area` = as.numeric(`Total number of abortions in the area`))
+abortion_2022
+```
+
+```{r}
+abortion_2021 <- 
+  read_excel("/Users/kbian50/PS 270/Final Project/data/Abortions-Distributed-by-State-2013-2022.xlsx", sheet="2021", skip = 1)
+abortion_2021
+```
+
+```{r}
+abortion_2021 <- abortion_2021 |>
+  select(Area, `Total by location of service`)|>
+  na.omit(abortion_2021) |>
+     filter(`Total by location of service` != "--") |>
+    rename(`Total number of abortions in the area` = `Total by location of service`) |>
+    mutate(Year = 2021,
+            `Total number of abortions in the area` = as.numeric(`Total number of abortions in the area`))
+abortion_2021
+```
+
+```{r}
+abortion_combined <-
+  rbind(abortion_2021, abortion_2022)
+abortion_combined
+```
+
+```{r}
+abortion_hist <-
+  ggplot(data = abortion_combined,
+         mapping = aes(x = `Total number of abortions in the area`)) +
+  geom_histogram(bins = 20) + facet_wrap(~Year) + 
+  scale_x_log10() + 
+  labs(x = "Number of Abortions",
+       y = "Number of States",
+       title = "Comparison of Post-Dobbs Abortion Rates (2021 vs 2022)")
+abortion_hist
+```
+
+
+
+

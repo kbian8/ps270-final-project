@@ -116,7 +116,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-13-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js","Milestone-3.pdf"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1548,7 +1548,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p>I think I might do something with voting behavior among young people or Asian Americans. Maybe data about how often young people vote in certain elections in swing states vs non swing states.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readxl.tidyverse.org'>readxl</a></span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readxl.tidyverse.org'>readxl</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
@@ -1559,30 +1560,34 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>states</span> <span class='op'>&lt;-</span> </span>
-<span>  <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_excel</a></span><span class='op'>(</span><span class='st'>"/Users/kbian50/PS 270/Final Project/data/Abortions-Distributed-by-State-2013-2022.xlsx"</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>abortion_2022</span> <span class='op'>&lt;-</span> </span>
+<span>  <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_excel</a></span><span class='op'>(</span><span class='st'>"/Users/kbian50/PS 270/Final Project/data/Abortions-Distributed-by-State-2013-2022.xlsx"</span>, sheet<span class='op'>=</span><span class='st'>"2022"</span>, skip <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>states</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>abortion_2022</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code># A tibble: 6 × 60
-  These data are consist…¹ ...2  `Area of Residence` ...4  ...5  ...6 
-  &lt;chr&gt;                    &lt;chr&gt; &lt;chr&gt;               &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
-1 2013                     Area  Alabama             Alas… Ariz… Arka…
-2 Area of Clinical Service Alab… 6997                0     0     --   
-3 &lt;NA&gt;                     Alas… 0                   1361  0     0    
-4 &lt;NA&gt;                     Ariz… --                  0     13254 --   
-5 &lt;NA&gt;                     Arka… 0                   0     0     3203 
-6 &lt;NA&gt;                     Cali… --                  --    --    --   
-# ℹ abbreviated name:
-#   ¹​`These data are consistent with data reported to CDC for Abortion Surveillance -- United States, 2013 found at: https://www.cdc.gov/mmwr/volumes/65/ss/ss6512a1.htm`
-# ℹ 54 more variables: ...7 &lt;chr&gt;, ...8 &lt;chr&gt;, ...9 &lt;chr&gt;,
-#   ...10 &lt;chr&gt;, ...11 &lt;chr&gt;, ...12 &lt;chr&gt;, ...13 &lt;chr&gt;, ...14 &lt;chr&gt;,
-#   ...15 &lt;chr&gt;, ...16 &lt;chr&gt;, ...17 &lt;chr&gt;, ...18 &lt;chr&gt;, ...19 &lt;chr&gt;,
-#   ...20 &lt;chr&gt;, ...21 &lt;chr&gt;, ...22 &lt;chr&gt;, ...23 &lt;chr&gt;, ...24 &lt;chr&gt;,
-#   ...25 &lt;chr&gt;, ...26 &lt;chr&gt;, ...27 &lt;chr&gt;, ...28 &lt;chr&gt;, …</code></pre>
+  `2022` Area  Alabama Alaska Arizona Arkansas `California**` Colorado
+  &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;          &lt;chr&gt;   
+1 Area … Alab… 2983    0      0       --       --             0       
+2 &lt;NA&gt;   Alas… 0       1230   --      0        --             --      
+3 &lt;NA&gt;   Ariz… 0       0      11407   0        --             --      
+4 &lt;NA&gt;   Arka… 0       0      0       1184     0              0       
+5 &lt;NA&gt;   Cali… --      --     --      --       --             --      
+6 &lt;NA&gt;   Colo… --      --     0       --       --             10143   
+# ℹ 52 more variables: Connecticut &lt;chr&gt;, Delaware &lt;chr&gt;,
+#   `District of Columbia` &lt;chr&gt;, Florida &lt;chr&gt;, Georgia &lt;chr&gt;,
+#   Hawaii &lt;chr&gt;, Idaho &lt;chr&gt;, Illinois &lt;chr&gt;, Indiana &lt;chr&gt;,
+#   Iowa &lt;chr&gt;, Kansas &lt;chr&gt;, Kentucky &lt;chr&gt;, Louisiana &lt;chr&gt;,
+#   Maine &lt;chr&gt;, `Maryland**` &lt;chr&gt;, Massachusetts &lt;chr&gt;,
+#   Michigan &lt;chr&gt;, Minnesota &lt;chr&gt;, Mississippi &lt;chr&gt;,
+#   Missouri &lt;chr&gt;, Montana &lt;chr&gt;, Nebraska &lt;chr&gt;, Nevada &lt;chr&gt;, …</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>abortion_2022</span> <span class='op'>&lt;-</span> <span class='va'>abortion_2022</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>Area</span>, <span class='va'>`Total by location of service`</span><span class='op'>)</span></span></code></pre>
+</div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -1606,7 +1611,182 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 #   `_citation_medication-abortion` &lt;chr&gt;, …</code></pre>
 </div>
 <p>Did states that enacted total abortion bans after Dobbs experience statistically significant declines in in-state abortion rates relative to states that did not? In this study, I want to examine whether or not abortion restrictions in 2022 actually decrease the rate of abortions performed in each state. I hypothesize that abortion rates decreased, but not in a drastic fashion that anti-abortion politicians (Republicans) intend. The Republican Party platform expects a direct causal relationship between abortion restrictions and rates of abortions– if abortion is restricted or banned, abortion rates will directly go down. However, I don’t believe this accounts for confounding variables that can affect abortion rates, such as interstate travel, tele-health, etc. I plan on focusing on a specific state or comparing one state that didn’t enact a ban vs. a state that did not enact a ban. For example, the explanatory variable is a state that enacted a post-Dobbs ban and a state that did not. The outcome variable of interest is the rate of abortions performed. If there is a slight decrease in abortion rates, this will prove my hypothesis. If there is no change or an increase, this will disprove my hypothesis.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<h2 id="final-project-milestone-3">Final Project Milestone 3</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readxl.tidyverse.org'>readxl</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>post</span> <span class='op'>&lt;-</span></span>
+<span>  <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_excel</a></span><span class='op'>(</span><span class='st'>"/Users/kbian50/PS 270/Final Project/data/Post-Dobbs State Abortion Restrictions and Protections_Data Page.xlsx"</span><span class='op'>)</span></span>
+<span><span class='va'>post</span></span></code></pre>
+</div>
+<pre><code># A tibble: 274 × 78
+   Jurisdiction `Effective Date`    `Valid Through Date` legalstat
+   &lt;chr&gt;        &lt;dttm&gt;              &lt;dttm&gt;                   &lt;dbl&gt;
+ 1 Alabama      2022-06-01 00:00:00 2022-06-23 00:00:00          1
+ 2 Alabama      2022-06-24 00:00:00 2023-06-01 00:00:00          1
+ 3 Alaska       2022-06-01 00:00:00 2022-06-30 00:00:00          1
+ 4 Alaska       2022-07-01 00:00:00 2022-07-13 00:00:00          1
+ 5 Alaska       2022-07-14 00:00:00 2023-06-01 00:00:00          1
+ 6 Arizona      2022-06-01 00:00:00 2022-06-29 00:00:00          1
+ 7 Arizona      2022-06-30 00:00:00 2022-07-10 00:00:00          1
+ 8 Arizona      2022-07-11 00:00:00 2022-07-12 00:00:00          1
+ 9 Arizona      2022-07-13 00:00:00 2022-09-21 00:00:00          1
+10 Arizona      2022-09-22 00:00:00 2022-09-23 00:00:00          1
+# ℹ 264 more rows
+# ℹ 74 more variables: `_citation_legalstat` &lt;chr&gt;,
+#   `_caution_legalstat` &lt;chr&gt;, `abortion-restrictions` &lt;chr&gt;,
+#   `_citation_abortion-restrictions` &lt;chr&gt;,
+#   `_caution_abortion-restrictions` &lt;chr&gt;, `trigger-law` &lt;chr&gt;,
+#   `_citation_trigger-law` &lt;chr&gt;, `_caution_trigger-law` &lt;chr&gt;,
+#   `medication-abortion` &lt;dbl&gt;, …</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>abortion_2022</span> <span class='op'>&lt;-</span> </span>
+<span>  <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_excel</a></span><span class='op'>(</span><span class='st'>"/Users/kbian50/PS 270/Final Project/data/Abortions-Distributed-by-State-2013-2022.xlsx"</span>, sheet<span class='op'>=</span><span class='st'>"2022"</span>, skip <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span><span class='va'>abortion_2022</span></span></code></pre>
+</div>
+<pre><code># A tibble: 56 × 60
+   `2022`         Area  Alabama Alaska Arizona Arkansas `California**`
+   &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;         
+ 1 Area of Clini… Alab… 2983    0      0       --       --            
+ 2 &lt;NA&gt;           Alas… 0       1230   --      0        --            
+ 3 &lt;NA&gt;           Ariz… 0       0      11407   0        --            
+ 4 &lt;NA&gt;           Arka… 0       0      0       1184     0             
+ 5 &lt;NA&gt;           Cali… --      --     --      --       --            
+ 6 &lt;NA&gt;           Colo… --      --     0       --       --            
+ 7 &lt;NA&gt;           Conn… 0       0      --      0        --            
+ 8 &lt;NA&gt;           Dela… 0       0      0       0        0             
+ 9 &lt;NA&gt;           Dist… --      0      0       --       --            
+10 &lt;NA&gt;           Flor… 1467    --     --      --       --            
+# ℹ 46 more rows
+# ℹ 53 more variables: Colorado &lt;chr&gt;, Connecticut &lt;chr&gt;,
+#   Delaware &lt;chr&gt;, `District of Columbia` &lt;chr&gt;, Florida &lt;chr&gt;,
+#   Georgia &lt;chr&gt;, Hawaii &lt;chr&gt;, Idaho &lt;chr&gt;, Illinois &lt;chr&gt;,
+#   Indiana &lt;chr&gt;, Iowa &lt;chr&gt;, Kansas &lt;chr&gt;, Kentucky &lt;chr&gt;,
+#   Louisiana &lt;chr&gt;, Maine &lt;chr&gt;, `Maryland**` &lt;chr&gt;,
+#   Massachusetts &lt;chr&gt;, Michigan &lt;chr&gt;, Minnesota &lt;chr&gt;, …</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>abortion_2022</span> <span class='op'>&lt;-</span> <span class='va'>abortion_2022</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>Area</span>, <span class='va'>`Total by location of service`</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span><span class='op'>(</span><span class='va'>abortion_2022</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>`Total by location of service`</span> <span class='op'>!=</span> <span class='st'>"--"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>`Total number of abortions in the area` <span class='op'>=</span> <span class='va'>`Total by location of service`</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>Year <span class='op'>=</span> <span class='fl'>2022</span>,</span>
+<span>           `Total number of abortions in the area` <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>`Total number of abortions in the area`</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='va'>abortion_2022</span></span></code></pre>
+</div>
+<pre><code># A tibble: 49 × 3
+   Area                 `Total number of abortions in the area`  Year
+   &lt;chr&gt;                                                  &lt;dbl&gt; &lt;dbl&gt;
+ 1 Alabama                                                 3777  2022
+ 2 Alaska                                                  1247  2022
+ 3 Arizona                                                11530  2022
+ 4 Arkansas                                                1621  2022
+ 5 Colorado                                               14154  2022
+ 6 Connecticut                                            11121  2022
+ 7 Delaware                                                2445  2022
+ 8 District of Columbia                                    4023  2022
+ 9 Florida                                                82581  2022
+10 Georgia                                                38820  2022
+# ℹ 39 more rows</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>abortion_2021</span> <span class='op'>&lt;-</span> </span>
+<span>  <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_excel</a></span><span class='op'>(</span><span class='st'>"/Users/kbian50/PS 270/Final Project/data/Abortions-Distributed-by-State-2013-2022.xlsx"</span>, sheet<span class='op'>=</span><span class='st'>"2021"</span>, skip <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span><span class='va'>abortion_2021</span></span></code></pre>
+</div>
+<pre><code># A tibble: 56 × 60
+   `2021`         Area  Alabama Alaska Arizona Arkansas `California**`
+   &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;         
+ 1 Area of Clini… Alab… 5345    0      --      --       --            
+ 2 &lt;NA&gt;           Alas… 0       1214   --      0        0             
+ 3 &lt;NA&gt;           Ariz… --      0      13896   0        --            
+ 4 &lt;NA&gt;           Arka… --      0      0       2746     0             
+ 5 &lt;NA&gt;           Cali… --      --     --      --       --            
+ 6 &lt;NA&gt;           Colo… --      0      0       --       --            
+ 7 &lt;NA&gt;           Conn… --      --     0       0        --            
+ 8 &lt;NA&gt;           Dela… 0       0      0       --       0             
+ 9 &lt;NA&gt;           Dist… --      0      0       --       --            
+10 &lt;NA&gt;           Flor… 1344    --     --      --       --            
+# ℹ 46 more rows
+# ℹ 53 more variables: Colorado &lt;chr&gt;, Connecticut &lt;chr&gt;,
+#   Delaware &lt;chr&gt;, `District of Columbia` &lt;chr&gt;, Florida &lt;chr&gt;,
+#   Georgia &lt;chr&gt;, Hawaii &lt;chr&gt;, Idaho &lt;chr&gt;, Illinois &lt;chr&gt;,
+#   Indiana &lt;chr&gt;, Iowa &lt;chr&gt;, Kansas &lt;chr&gt;, Kentucky &lt;chr&gt;,
+#   Louisiana &lt;chr&gt;, Maine &lt;chr&gt;, `Maryland**` &lt;chr&gt;,
+#   Massachusetts &lt;chr&gt;, Michigan &lt;chr&gt;, Minnesota &lt;chr&gt;, …</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>abortion_2021</span> <span class='op'>&lt;-</span> <span class='va'>abortion_2021</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>Area</span>, <span class='va'>`Total by location of service`</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span><span class='op'>(</span><span class='va'>abortion_2021</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>`Total by location of service`</span> <span class='op'>!=</span> <span class='st'>"--"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>`Total number of abortions in the area` <span class='op'>=</span> <span class='va'>`Total by location of service`</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>Year <span class='op'>=</span> <span class='fl'>2021</span>,</span>
+<span>            `Total number of abortions in the area` <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>`Total number of abortions in the area`</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='va'>abortion_2021</span></span></code></pre>
+</div>
+<pre><code># A tibble: 49 × 3
+   Area                 `Total number of abortions in the area`  Year
+   &lt;chr&gt;                                                  &lt;dbl&gt; &lt;dbl&gt;
+ 1 Alabama                                                 6489  2021
+ 2 Alaska                                                  1227  2021
+ 3 Arizona                                                13998  2021
+ 4 Arkansas                                                3133  2021
+ 5 Colorado                                               11580  2021
+ 6 Connecticut                                            10146  2021
+ 7 Delaware                                                1825  2021
+ 8 District of Columbia                                    3870  2021
+ 9 Florida                                                79817  2021
+10 Georgia                                                41833  2021
+# ℹ 39 more rows</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>abortion_combined</span> <span class='op'>&lt;-</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='va'>abortion_2021</span>, <span class='va'>abortion_2022</span><span class='op'>)</span></span>
+<span><span class='va'>abortion_combined</span></span></code></pre>
+</div>
+<pre><code># A tibble: 98 × 3
+   Area                 `Total number of abortions in the area`  Year
+   &lt;chr&gt;                                                  &lt;dbl&gt; &lt;dbl&gt;
+ 1 Alabama                                                 6489  2021
+ 2 Alaska                                                  1227  2021
+ 3 Arizona                                                13998  2021
+ 4 Arkansas                                                3133  2021
+ 5 Colorado                                               11580  2021
+ 6 Connecticut                                            10146  2021
+ 7 Delaware                                                1825  2021
+ 8 District of Columbia                                    3870  2021
+ 9 Florida                                                79817  2021
+10 Georgia                                                41833  2021
+# ℹ 88 more rows</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>abortion_hist</span> <span class='op'>&lt;-</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>abortion_combined</span>,</span>
+<span>         mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`Total number of abortions in the area`</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span>bins <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span><span class='op'>(</span><span class='op'>~</span><span class='va'>Year</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_x_log10</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Number of Abortions"</span>,</span>
+<span>       y <span class='op'>=</span> <span class='st'>"Number of States"</span>,</span>
+<span>       title <span class='op'>=</span> <span class='st'>"Comparison of Post-Dobbs Abortion Rates (2021 vs 2022)"</span><span class='op'>)</span></span>
+<span><span class='va'>abortion_hist</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-13-1.png" alt="" width="624" /></p>
+</div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
