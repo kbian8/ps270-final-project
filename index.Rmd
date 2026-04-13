@@ -112,6 +112,3 @@ abortion_hist <-
 abortion_hist
 ```
 
-
-
-

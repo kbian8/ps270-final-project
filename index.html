@@ -116,7 +116,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-13-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js","Milestone-3.pdf"]}
+  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-13-1.png","index_files/figure-html5/unnamed-chunk-17-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js","Milestone-3.pdf"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1788,7 +1788,94 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <p><img src="index_files/figure-html5/unnamed-chunk-13-1.png" alt="" width="624" /></p>
 </div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<h2 id="final-project-milestone-4">Final Project Milestone 4</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>post</span></span></code></pre>
+</div>
+<pre><code># A tibble: 274 × 78
+   Jurisdiction `Effective Date`    `Valid Through Date` legalstat
+   &lt;chr&gt;        &lt;dttm&gt;              &lt;dttm&gt;                   &lt;dbl&gt;
+ 1 Alabama      2022-06-01 00:00:00 2022-06-23 00:00:00          1
+ 2 Alabama      2022-06-24 00:00:00 2023-06-01 00:00:00          1
+ 3 Alaska       2022-06-01 00:00:00 2022-06-30 00:00:00          1
+ 4 Alaska       2022-07-01 00:00:00 2022-07-13 00:00:00          1
+ 5 Alaska       2022-07-14 00:00:00 2023-06-01 00:00:00          1
+ 6 Arizona      2022-06-01 00:00:00 2022-06-29 00:00:00          1
+ 7 Arizona      2022-06-30 00:00:00 2022-07-10 00:00:00          1
+ 8 Arizona      2022-07-11 00:00:00 2022-07-12 00:00:00          1
+ 9 Arizona      2022-07-13 00:00:00 2022-09-21 00:00:00          1
+10 Arizona      2022-09-22 00:00:00 2022-09-23 00:00:00          1
+# ℹ 264 more rows
+# ℹ 74 more variables: `_citation_legalstat` &lt;chr&gt;,
+#   `_caution_legalstat` &lt;chr&gt;, `abortion-restrictions` &lt;chr&gt;,
+#   `_citation_abortion-restrictions` &lt;chr&gt;,
+#   `_caution_abortion-restrictions` &lt;chr&gt;, `trigger-law` &lt;chr&gt;,
+#   `_citation_trigger-law` &lt;chr&gt;, `_caution_trigger-law` &lt;chr&gt;,
+#   `medication-abortion` &lt;dbl&gt;, …</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>cleaned_post</span> <span class='op'>&lt;-</span> <span class='va'>post</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>Jurisdiction</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>legalstat <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>legalstat</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='va'>cleaned_post</span></span></code></pre>
+</div>
+<pre><code># A tibble: 51 × 2
+   Jurisdiction         legalstat
+   &lt;chr&gt;                    &lt;dbl&gt;
+ 1 Alabama                      1
+ 2 Alaska                       1
+ 3 Arizona                      1
+ 4 Arkansas                     1
+ 5 California                   0
+ 6 Colorado                     0
+ 7 Connecticut                  0
+ 8 Delaware                     0
+ 9 District of Columbia         0
+10 Florida                      1
+# ℹ 41 more rows</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>abortion_combined_final</span> <span class='op'>&lt;-</span> <span class='va'>abortion_combined</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span><span class='op'>(</span><span class='va'>cleaned_post</span>, by <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Area"</span> <span class='op'>=</span> <span class='st'>"Jurisdiction"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/drop_na.html'>drop_na</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='va'>abortion_combined_final</span></span></code></pre>
+</div>
+<pre><code># A tibble: 92 × 4
+   Area                 Total number of abortions in…¹  Year legalstat
+   &lt;chr&gt;                                         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
+ 1 Alabama                                        6489  2021         1
+ 2 Alaska                                         1227  2021         1
+ 3 Arizona                                       13998  2021         1
+ 4 Arkansas                                       3133  2021         1
+ 5 Colorado                                      11580  2021         0
+ 6 Connecticut                                   10146  2021         0
+ 7 Delaware                                       1825  2021         0
+ 8 District of Columbia                           3870  2021         0
+ 9 Florida                                       79817  2021         1
+10 Georgia                                       41833  2021         1
+# ℹ 82 more rows
+# ℹ abbreviated name: ¹​`Total number of abortions in the area`</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>combined_boxplot</span> <span class='op'>&lt;-</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>abortion_combined_final</span>,</span>
+<span>         mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>legalstat</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='va'>`Total number of abortions in the area`</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='st'>"steelblue"</span>, alpha <span class='op'>=</span> <span class='fl'>0.7</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_jitter.html'>geom_jitter</a></span><span class='op'>(</span>width <span class='op'>=</span> <span class='fl'>0.2</span>, alpha <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Number of Abortions Performed in States after Post-Dobbs Restrictions"</span>,</span>
+<span>       x <span class='op'>=</span> <span class='st'>"Law Passed (O = No, 1 = Yes)"</span>,</span>
+<span>       y <span class='op'>=</span> <span class='st'>"Number of Abortions"</span><span class='op'>)</span></span>
+<span><span class='va'>combined_boxplot</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-17-1.png" alt="" width="624" /></p>
+</div>
+<p>My research question asks whether post-Dobbs abortion restrictions passed in states affect the number of abortions in that particular state. This boxplot shows that states that did not pass post-Dobbs abortion restrictions have a higher median of abortions performed, compared to states that did pass post-Dobbs abortion restrictions. This is a logical relationship and to be expected. However, in states that did pass restrictions, there are more extreme outliers, with some even exceeding 80,000 abortions in that state. This can be represented by states with high populations, like California, or can demonstrate people from out-of-state arriving in states with no restrictions to get an abortion.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
