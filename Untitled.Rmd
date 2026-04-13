@@ -1,0 +1,15 @@
+---
+title: "Creating FP Repo"
+author: "Kathy Bian"
+date: "2026-02-16"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+install.packages("distill")
+```
+
