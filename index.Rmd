@@ -112,3 +112,34 @@ abortion_hist <-
 abortion_hist
 ```
 
+## Final Project Milestone 4 
+
+```{r}
+post
+```
+```{r}
+cleaned_post <- post |>
+  group_by(Jurisdiction) |>
+  summarise(legalstat = max(legalstat, na.rm = TRUE)) |>
+  ungroup()
+cleaned_post
+```
+
+```{r}
+abortion_combined_final <- abortion_combined |>
+  left_join(cleaned_post, by = c("Area" = "Jurisdiction")) |>
+  drop_na()
+abortion_combined_final
+```
+```{r}
+combined_boxplot <-
+  ggplot(data = abortion_combined_final,
+         mapping = aes(x = as.factor(legalstat), y = `Total number of abortions in the area`)) +
+  geom_boxplot(fill = "steelblue", alpha = 0.7) +
+  geom_jitter(width = 0.2, alpha = 0.5) + 
+  labs(title = "Number of Abortions Performed in States after Post-Dobbs Restrictions",
+       x = "Law Passed (O = No, 1 = Yes)",
+       y = "Number of Abortions")
+combined_boxplot
+```
+My research question asks whether post-Dobbs abortion restrictions passed in states affect the number of abortions in that particular state. This boxplot shows that states that did not pass post-Dobbs abortion restrictions have a higher median of abortions performed, compared to states that did pass post-Dobbs abortion restrictions. This is a logical relationship and to be expected. However, in states that did pass restrictions, there are more extreme outliers, with some even exceeding 80,000 abortions in that state. This can be represented by states with high populations, like California, or can demonstrate people from out-of-state arriving in states with no restrictions to get an abortion. 
