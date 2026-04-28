@@ -109,7 +109,7 @@ abortion_combined
 ```
 
 
-```{r print-code, ref.label=knitr::all_labels(), echo = TRUE, eval=FALSE}
+```{r print-code, ref.label=knitr::all_labels(), echo = FALSE, eval=FALSE}
 library(scales)
 abortion_hist <-
   ggplot(data = abortion_combined,
