@@ -97,8 +97,19 @@ abortion_combined <-
   rbind(abortion_2021, abortion_2022)
 abortion_combined
 ```
-
 ```{r}
+abortion_combined <- abortion_combined |>
+  mutate(area = ifelse(Area %in% c("New York City", "New York State"),
+                       "New York",
+                       Area)) |>
+  group_by(Area, Year) |>
+  summarize(`Total number of abortions in the area` = sum(`Total number of abortions in the area`),
+            .groups = "drop")
+abortion_combined
+```
+
+
+```{r print-code, ref.label=knitr::all_labels(), echo = TRUE, eval=FALSE}
 library(scales)
 abortion_hist <-
   ggplot(data = abortion_combined,
@@ -124,18 +135,29 @@ cleaned_post <- post |>
   ungroup()
 cleaned_post
 ```
-
 ```{r}
-abortion_combined_final <- abortion_combined |>
+abortion_combined_fixed <- abortion_combined |>
+  mutate(Area = if_else(Area %in% c("New York City", "New York State"),
+                       "New York",
+                       Area)) |>
+  group_by(Area, Year) |>
+  summarise(`Total number of abortions in the area` = 
+              sum(`Total number of abortions in the area`),
+            .groups = "drop")
+abortion_combined_fixed
+```
+```{r}
+abortion_combined_final <- abortion_combined_fixed |>
   left_join(cleaned_post, by = c("Area" = "Jurisdiction")) |>
   drop_na()
 abortion_combined_final
 ```
+
 ```{r}
 combined_boxplot <-
   ggplot(data = abortion_combined_final,
          mapping = aes(x = as.factor(legalstat), y = `Total number of abortions in the area`)) +
-  geom_boxplot(fill = "steelblue", alpha = 0.7) +
+  geom_boxplot(fill = "steelblue", alpha = 0.8) +
   geom_jitter(width = 0.2, alpha = 0.5) + 
   labs(title = "Number of Abortions Performed in States after Post-Dobbs Restrictions",
        x = "Law Passed (O = No, 1 = Yes)",
@@ -143,3 +165,29 @@ combined_boxplot <-
 combined_boxplot
 ```
 My research question asks whether post-Dobbs abortion restrictions passed in states affect the number of abortions in that particular state. This boxplot shows that states that did not pass post-Dobbs abortion restrictions have a higher median of abortions performed, compared to states that did pass post-Dobbs abortion restrictions. This is a logical relationship and to be expected. However, in states that did pass restrictions, there are more extreme outliers, with some even exceeding 80,000 abortions in that state. This can be represented by states with high populations, like California, or can demonstrate people from out-of-state arriving in states with no restrictions to get an abortion. 
+
+```{r}
+library(broom)
+library(knitr)
+library(kableExtra)
+abortion.reg <- lm(`Total number of abortions in the area` ~ legalstat, data = abortion_combined_final)
+abortion.reg
+```
+```{r}
+tidy_model<- tidy(abortion.reg)
+tidy_model
+
+tidy_model |>
+  kable(col.names = c("Term", "Estimate", "Std. Error", "Statistic", "p-value"), digits = 2, caption = "Regression Results: Impact of Post Dobbs Abortion Restrictions") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+```
+
+The average number of abortions in states that did not pass Post-Dobbs abortion laws is about 15,186. On average, states that passed restrictive laws have 2,851 fewer abortions than states that did not.
+
+
+## HIGHLIGHT IMPORTANT INFO 
+*italics* 
+**bold** 
+
+Clean up project milestones
+Explain things to a person who hasn't taken this class 
