@@ -7,64 +7,43 @@ output:
     self_contained: false
 ---
 
-
-## Project thoughts
-
-I think I might do something with voting behavior among young people or Asian Americans. Maybe data about how often young people vote in certain elections in swing states vs non swing states. 
-
-
-```{r}
+```{r print-code-0, echo = FALSE, eval= TRUE}
 library(readxl)
 library(tidyverse)
-```
+library(dplyr)
 
-
-
-```{r}
 post <-
   read_excel("/Users/kbian50/PS 270/Final Project/data/Post-Dobbs State Abortion Restrictions and Protections_Data Page.xlsx")
-```
-
-```{r}
 abortion_2022 <- 
   read_excel("/Users/kbian50/PS 270/Final Project/data/Abortions-Distributed-by-State-2013-2022.xlsx", sheet="2022", skip = 1)
 ```
-```{r}
-head(abortion_2022)
-abortion_2022 <- abortion_2022 |>
-  select(Area, `Total by location of service`)
-```
 
-```{r}
-head(post)
-```
+## Introduction
+In 2022, the Supreme Court ruled in *Dobbs v. Jackson Women's Health Organization* that there is no explicit constitutional right to an abortion. This overturned an important 50-year-old precedent established in *Roe v. Wade* (1973). Following the decision, nearly half of the states moved to ban or heavily restrict abortion, with 13 states having trigger laws that effectively banned abortion immediately. This was considered an extreme success for the conservative pro-life movement and, consequently, the Republican lawmakers and their legislators.
 
-
-Did states that enacted total abortion bans after Dobbs experience statistically significant declines in in-state abortion rates relative to states that did not? In this study, I want to examine whether or not abortion restrictions in 2022 actually decrease the rate of abortions performed in each state. I hypothesize that abortion rates decreased, but not in a drastic fashion that anti-abortion politicians (Republicans) intend. The Republican Party platform expects a direct causal relationship between abortion restrictions and rates of abortions-- if abortion is restricted or banned, abortion rates will directly go down. However, I don't believe this accounts for confounding variables that can affect abortion rates, such as interstate travel, tele-health, etc. I plan on focusing on a specific state or comparing one state that didn't enact a ban vs. a state that did not enact a ban. For example, the explanatory variable is a state that enacted a post-Dobbs ban and a state that did not. The outcome variable of interest is the rate of abortions performed. If there is a slight decrease in abortion rates, this will prove my hypothesis. If there is no change or an increase, this will disprove my hypothesis.
+**The research question for this project is: Did states that enacted total abortion bans after Dobbs experience statistically significant declines in in-state abortion rates relative to states that did not?** In this study, I want to examine whether or not abortion restrictions in 2022 actually decreased the rate of abortions performed in each state. **My hypothesis for this question is that post-Dobbs abortion laws did decrease the number of abortions, but not in a significant fashion.** The Republican Party platform expects a direct causal relationship between abortion restrictions and abortion rates– if abortion is restricted or banned, abortion rates are expected to decrease. However, I don't believe this accounts for confounding variables that can affect abortion rates, such as interstate travel, tele-health, etc. 
 
 
 
-## Final Project Milestone 3 
+## Data Explanation 
+This study examines how abortion restrictions enacted post-Dobbs are associated with the number of abortions performed across different states (including Washington, D.C). 
 
-```{r}
-library(readxl)
-library(tidyverse)
-```
+**The independent variable** is the legal status of abortion in each state, demonstrated with a binary indicator (legalstat). ‘1’ indicates that a state enacted post-Dobbs abortion restrictions, and ‘0’ indicates the state didn’t enact these laws.  This dataset was obtained from LawAtlas, which tracked key legal developments from June 1, 2022, through June 1, 2023. This study will compare abortion rates in 2021 to 2022. The dataset categorized states by whether restrictive legislation was implemented following the Dobbs ruling and by other specifics (trigger laws and other legislation passed). States that could not be matched during the merge of the two datasets were aligned to ensure consistency. 
 
+**The dependent variable** is the number of abortions performed in 2021 and 2022. This data was obtained from reports to the CDC for Abortion Surveillance from 2013 to 2022 and compiled into a spreadsheet. The dataset was manually filtered to include only reported rates for 2021 and 2022, combined for New York City and New York State. 
 
+The histogram compares the distribution of abortions in 2021 (pre-Dobbs) and in 2022 (post-Dobbs). Both distributions are skewed right, with a small number of states contributing to high and low numbers of abortion rates, like California or Alaska. However, the distribution of the histogram in 2022 appears more dispersed, demonstrating a higher range and more states exhibiting higher rates of abortions performed. This is consistent with the idea that there is interstate travel for those seeking abortions in states where there are no restrictions from states with restrictions. 
 
-```{r}
-post <-
-  read_excel("/Users/kbian50/PS 270/Final Project/data/Post-Dobbs State Abortion Restrictions and Protections_Data Page.xlsx")
-post
-```
-
-```{r}
+```{r print-code-1, echo = FALSE, eval= TRUE}
 abortion_2022 <- 
   read_excel("/Users/kbian50/PS 270/Final Project/data/Abortions-Distributed-by-State-2013-2022.xlsx", sheet="2022", skip = 1)
-abortion_2022
+
+
+abortion_2021 <- 
+  read_excel("/Users/kbian50/PS 270/Final Project/data/Abortions-Distributed-by-State-2013-2022.xlsx", sheet="2021", skip = 1)
 ```
-```{r}
+
+```{r print-code-2,echo = FALSE, eval= TRUE}
 abortion_2022 <- abortion_2022 |>
   select(Area, `Total by location of service`)|>
   na.omit(abortion_2022) |>
@@ -72,16 +51,9 @@ abortion_2022 <- abortion_2022 |>
     rename(`Total number of abortions in the area` = `Total by location of service`) |>
     mutate(Year = 2022,
            `Total number of abortions in the area` = as.numeric(`Total number of abortions in the area`))
-abortion_2022
 ```
 
-```{r}
-abortion_2021 <- 
-  read_excel("/Users/kbian50/PS 270/Final Project/data/Abortions-Distributed-by-State-2013-2022.xlsx", sheet="2021", skip = 1)
-abortion_2021
-```
-
-```{r}
+```{r print-code-3, echo = FALSE, eval= TRUE}
 abortion_2021 <- abortion_2021 |>
   select(Area, `Total by location of service`)|>
   na.omit(abortion_2021) |>
@@ -89,28 +61,23 @@ abortion_2021 <- abortion_2021 |>
     rename(`Total number of abortions in the area` = `Total by location of service`) |>
     mutate(Year = 2021,
             `Total number of abortions in the area` = as.numeric(`Total number of abortions in the area`))
-abortion_2021
 ```
 
-```{r}
+```{r print-code-4,echo = FALSE, eval= TRUE}
 abortion_combined <-
   rbind(abortion_2021, abortion_2022)
-abortion_combined
-```
-```{r}
-abortion_combined <- abortion_combined |>
-  mutate(area = ifelse(Area %in% c("New York City", "New York State"),
-                       "New York",
-                       Area)) |>
-  group_by(Area, Year) |>
-  summarize(`Total number of abortions in the area` = sum(`Total number of abortions in the area`),
-            .groups = "drop")
-abortion_combined
 ```
 
+```{r print-code-5, echo = FALSE, eval= TRUE}
+cleaned_post <- post |>
+  group_by(Jurisdiction) |>
+  summarise(legalstat = max(legalstat, na.rm = TRUE)) |>
+  ungroup()
+```
 
-```{r}
+```{r print-code-6, echo = FALSE, eval= TRUE}
 library(scales)
+library(tidyverse)
 abortion_hist <-
   ggplot(data = abortion_combined,
          mapping = aes(x = `Total number of abortions in the area`)) +
@@ -123,19 +90,32 @@ abortion_hist <-
 abortion_hist
 ```
 
-## Final Project Milestone 4 
 
-```{r}
-post
-```
-```{r}
+## Results
+
+To evaluate the results that restrictive abortion laws are associated with a decrease in abortions performed, I utilize a cross-sectional design, where I compare the distribution of abortion rates across states with and without these laws. The primary criterion of supporting the hypothesis is whether states with the restrictions exhibit significantly lower abortion counts statistically (through regression) and visually (through the data visualizations). 
+
+*Evaluating the Data Visualizations* 
+
+The boxplot comparing abortion rates by legal status in each state also demonstrates substantial variation. States without abortion restrictions (legalstat = 0) exhibit a higher median of abortion counts compared to states with abortion restrictions (legalstat = 1) that has a median under 1000. However, states with abortion restrictions are more sensitive to outliers, as demonstrated by the multiple data points out of the range.
+
+```{r print-code-7, echo = FALSE, eval= TRUE}
 cleaned_post <- post |>
   group_by(Jurisdiction) |>
   summarise(legalstat = max(legalstat, na.rm = TRUE)) |>
   ungroup()
-cleaned_post
 ```
-```{r}
+
+```{r print-code-8, echo = FALSE, eval= TRUE}
+abortion_combined <- abortion_combined |>
+  mutate(area = ifelse(Area %in% c("New York City", "New York State"),
+                       "New York",
+                       Area)) |>
+  group_by(Area, Year) |>
+  summarize(`Total number of abortions in the area` = sum(`Total number of abortions in the area`),
+            .groups = "drop")
+
+
 abortion_combined_fixed <- abortion_combined |>
   mutate(Area = if_else(Area %in% c("New York City", "New York State"),
                        "New York",
@@ -144,16 +124,13 @@ abortion_combined_fixed <- abortion_combined |>
   summarise(`Total number of abortions in the area` = 
               sum(`Total number of abortions in the area`),
             .groups = "drop")
-abortion_combined_fixed
-```
-```{r}
+
 abortion_combined_final <- abortion_combined_fixed |>
   left_join(cleaned_post, by = c("Area" = "Jurisdiction")) |>
   drop_na()
-abortion_combined_final
 ```
 
-```{r print-code, ref.label=knitr::all_labels(), echo = TRUE, eval= FALSE}
+```{r print-code-10, echo = FALSE, eval= TRUE}
 combined_boxplot <-
   ggplot(data = abortion_combined_final,
          mapping = aes(x = as.factor(legalstat), y = `Total number of abortions in the area`)) +
@@ -164,30 +141,139 @@ combined_boxplot <-
        y = "Number of Abortions")
 combined_boxplot
 ```
-My research question asks whether post-Dobbs abortion restrictions passed in states affect the number of abortions in that particular state. This boxplot shows that states that did not pass post-Dobbs abortion restrictions have a higher median of abortions performed, compared to states that did pass post-Dobbs abortion restrictions. This is a logical relationship and to be expected. However, in states that did pass restrictions, there are more extreme outliers, with some even exceeding 80,000 abortions in that state. This can be represented by states with high populations, like California, or can demonstrate people from out-of-state arriving in states with no restrictions to get an abortion. 
 
-```{r}
+*Regression Model Analysis* 
+
+To further examine this relationship, a regression model was calculated where the number of abortions is regressed on the legal status indicator. The average number of abortions in states without restrictions is estimated to be around 15,187 abortions. At a confidence level of 95%, a p-value of 0 for this coefficient indicates statistical significance. The legalstat coefficient is the difference between restricted and non-restricted states. The model estimates that states with restrictions have around 2851 fewer abortions on average than states without restrictions. However, we cannot confidently determine that abortion restrictions are associated with fewer abortions because the p-value is greater than the alpha level of 0.05. **There is no strong evidence that abortion restrictions are associated with lower abortion counts in this dataset, according to the regression model.**
+
+```{r print-code-11, echo = FALSE, eval= TRUE}
+library(broom)
+library(knitr)
+library(kableExtra)
+abortion.reg <- lm(`Total number of abortions in the area` ~ legalstat, data = abortion_combined_final)
+```
+
+```{r print-code-112, echo = FALSE, eval= TRUE}
+tidy_model<- tidy(abortion.reg)
+
+
+tidy_model |>
+  kable(col.names = c("Term", "Estimate", "Std. Error", "t-value", "p-value"), digits = 2, caption = "Regression Results: Impact of Post Dobbs Abortion Restrictions") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+```
+
+The null hypothesis states that abortion restrictions have no effect on abortion rates. However, confounders can still disprove the null, even if the regression leads to the rejection of the null hypothesis. **This analysis should not be interpreted causally, as states that pass restrictive laws differ systematically from those that do not, introducing potential confounding factors.** An example of a confounding variable is the political affiliations of states with and without abortion restrictions. States that passed post-Dobbs abortion restrictions aren’t random; they are mostly clustered in the South and the Midwest and are politically conservative, which can lead to fewer abortion providers overall. Another is state population size. States with higher populations logically have higher abortion rates compared to states with lower populations. 
+
+
+## Conclusion 
+**Overall, this analysis provides *partial* support for the hypothesis that post-Dobbs abortion restrictions are associated with a lower number of abortions performed within states with such restrictions.** Both the visual and regression outputs demonstrate a negative relationship between restrictive laws and abortion rates. However, this finding is limited by several confounding factors, including political ideology and state population size, and relies on raw data rather than population-adjusted data, and even variability across multiple datasets. Cross-state travel also likely redistributes abortion services rather than reducing abortion services overall. Future research could improve this analysis by controlling for demographic and political variables and incorporating per capita measures. 
+
+```{r print-code, ref.label=knitr::all_labels(), echo = TRUE, eval= FALSE}
+library(readxl)
+library(tidyverse)
+
+post <-
+  read_excel("/Users/kbian50/PS 270/Final Project/data/Post-Dobbs State Abortion Restrictions and Protections_Data Page.xlsx")
+abortion_2022 <- 
+  read_excel("/Users/kbian50/PS 270/Final Project/data/Abortions-Distributed-by-State-2013-2022.xlsx", sheet="2022", skip = 1)
+
+abortion_2022 <- abortion_2022 |>
+  select(Area, `Total by location of service`)|>
+  na.omit(abortion_2022) |>
+     filter(`Total by location of service` != "--") |>
+    rename(`Total number of abortions in the area` = `Total by location of service`) |>
+    mutate(Year = 2022,
+           `Total number of abortions in the area` = as.numeric(`Total number of abortions in the area`))
+abortion_2022
+
+abortion_2021 <- 
+  read_excel("/Users/kbian50/PS 270/Final Project/data/Abortions-Distributed-by-State-2013-2022.xlsx", sheet="2021", skip = 1)
+abortion_2021
+
+abortion_2021 <- abortion_2021 |>
+  select(Area, `Total by location of service`)|>
+  na.omit(abortion_2021) |>
+     filter(`Total by location of service` != "--") |>
+    rename(`Total number of abortions in the area` = `Total by location of service`) |>
+    mutate(Year = 2021,
+            `Total number of abortions in the area` = as.numeric(`Total number of abortions in the area`))
+abortion_2021
+
+abortion_combined <-
+  rbind(abortion_2021, abortion_2022)
+abortion_combined
+
+abortion_combined <- abortion_combined |>
+  mutate(area = ifelse(Area %in% c("New York City", "New York State"),
+                       "New York",
+                       Area)) |>
+  group_by(Area, Year) |>
+  summarize(`Total number of abortions in the area` = sum(`Total number of abortions in the area`),
+            .groups = "drop")
+abortion_combined
+
+abortion_combined_final <- abortion_combined_fixed |>
+  left_join(cleaned_post, by = c("Area" = "Jurisdiction")) |>
+  drop_na()
+abortion_combined_final
+
+library(scales)
+abortion_hist <-
+  ggplot(data = abortion_combined,
+         mapping = aes(x = `Total number of abortions in the area`)) +
+  geom_histogram(bins = 20) + facet_wrap(~Year) + 
+  scale_x_log10(labels = label_comma()) + 
+  labs(x = "Number of Abortions",
+       y = "Number of States",
+       title = "Comparison of Post-Dobbs Abortion Rates (2021 vs 2022)") + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+abortion_hist
+
+cleaned_post <- post |>
+  group_by(Jurisdiction) |>
+  summarise(legalstat = max(legalstat, na.rm = TRUE)) |>
+  ungroup()
+cleaned_post
+
+abortion_combined_fixed <- abortion_combined |>
+  mutate(Area = if_else(Area %in% c("New York City", "New York State"),
+                       "New York",
+                       Area)) |>
+  group_by(Area, Year) |>
+  summarise(`Total number of abortions in the area` = 
+              sum(`Total number of abortions in the area`),
+            .groups = "drop")
+abortion_combined_fixed
+
+abortion_combined_final <- abortion_combined_fixed |>
+  left_join(cleaned_post, by = c("Area" = "Jurisdiction")) |>
+  drop_na()
+abortion_combined_final
+
+combined_boxplot <-
+  ggplot(data = abortion_combined_final,
+         mapping = aes(x = as.factor(legalstat), y = `Total number of abortions in the area`)) +
+  geom_boxplot(fill = "steelblue", alpha = 0.8) +
+  geom_jitter(width = 0.2, alpha = 0.5) + 
+  labs(title = "Number of Abortions Performed in States after Post-Dobbs Restrictions",
+       x = "Law Passed (O = No, 1 = Yes)",
+       y = "Number of Abortions")
+combined_boxplot
+
 library(broom)
 library(knitr)
 library(kableExtra)
 abortion.reg <- lm(`Total number of abortions in the area` ~ legalstat, data = abortion_combined_final)
 abortion.reg
-```
-```{r}
+
+abortion.reg |>
+  summary() 
+
 tidy_model<- tidy(abortion.reg)
 tidy_model
 
 tidy_model |>
-  kable(col.names = c("Term", "Estimate", "Std. Error", "Statistic", "p-value"), digits = 2, caption = "Regression Results: Impact of Post Dobbs Abortion Restrictions") |>
+  kable(col.names = c("Term", "Estimate", "Std. Error", "t-value", "p-value"), digits = 2, caption = "Regression Results: Impact of Post Dobbs Abortion Restrictions") |>
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
 ```
 
-The average number of abortions in states that did not pass Post-Dobbs abortion laws is about 15,186. On average, states that passed restrictive laws have 2,851 fewer abortions than states that did not.
-
-
-## HIGHLIGHT IMPORTANT INFO 
-*italics* 
-**bold** 
-
-Clean up project milestones
-Explain things to a person who hasn't taken this class 
